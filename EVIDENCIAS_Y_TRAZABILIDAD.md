@@ -18,6 +18,18 @@ La calificación se realiza al finalizar S6, pero el historial debe permitir rec
 - no exigir merge por sesión;
 - no hacer squash/rebase destructivo que borre el progreso antes de la evaluación.
 
+## Registro S2 — GOAL 01 y baseline integrado
+
+| Campo | Evidencia |
+|---|---|
+| Repos | `citas-api` y `citas-web`, rama `develop` |
+| HU abordadas | HU-001 Registrar USER y HU-002 Gestionar sesión JWT |
+| Backend | `mvn test` en Java 21: 9 pruebas, 0 fallos/errores |
+| Infraestructura | MySQL 8.4 saludable; API con Flyway respondió health `200` |
+| REST | CORS `http://localhost:5173`, registro `201`, login, rotación de refresh y logout `204` con datos sintéticos |
+| Frontend | Cliente REST directo por `VITE_API_URL`; `npm run lint` y `npm run build` exitosos |
+| Pendientes | Recuperación de contraseña, autorización por ownership y HU posteriores no pertenecen a S2 |
+
 ## Plantilla de registro
 
 ```text
