@@ -53,6 +53,9 @@ services:
       JWT_ACCESS_TTL_SECONDS: ${JWT_ACCESS_TTL_SECONDS:-900}
       JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS:-604800}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
+      # Contenedor de desarrollo: RF-03 permite exponer el token de recuperación solo en perfil dev (sin SMTP)
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      PASSWORD_RESET_EXPOSE_TOKEN: ${PASSWORD_RESET_EXPOSE_TOKEN:-true}
 
     ports:
       - "${API_PORT:-8080}:8080"
@@ -76,6 +79,8 @@ services:
 
     volumes:
       - ./citas-web:/workspace
+      # node_modules propio del contenedor (binarios nativos Linux), aislado del host Windows
+      - web_node_modules:/workspace/node_modules
       - node_cache:/root/.npm
 
     ports:
@@ -95,3 +100,4 @@ volumes:
   mysql_data:
   maven_cache:
   node_cache:
+  web_node_modules:
