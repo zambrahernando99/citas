@@ -6,7 +6,9 @@ services:
     restart: unless-stopped
 
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      # BD de la aplicación (Flyway). Debe ser distinta de citas_fcv_training,
+      # que crea database/reference/db.sql: si coinciden, Flyway falla en V3.
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-citas_app}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -45,7 +47,7 @@ services:
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_NAME: ${MYSQL_DATABASE}
+      DB_NAME: ${MYSQL_DATABASE:-citas_app}
       DB_USERNAME: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
 
@@ -55,6 +57,10 @@ services:
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
       # Contenedor de desarrollo: RF-03 permite exponer el token de recuperación solo en perfil dev (sin SMTP)
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      # S5: clave de máquina para n8n (X-Automation-Key). Vacía = endpoints de automatización cerrados.
+      AUTOMATION_API_KEY: ${AUTOMATION_API_KEY:-}
+      REMINDER_DEFAULT_WINDOW_HOURS: ${REMINDER_DEFAULT_WINDOW_HOURS:-24}
+      REMINDER_MAX_ATTEMPTS: ${REMINDER_MAX_ATTEMPTS:-3}
       PASSWORD_RESET_EXPOSE_TOKEN: ${PASSWORD_RESET_EXPOSE_TOKEN:-true}
 
     ports:

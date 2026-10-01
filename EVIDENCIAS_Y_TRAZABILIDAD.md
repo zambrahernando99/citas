@@ -67,3 +67,17 @@ Los JSON exportados deben abrir/importar sin depender de secretos embebidos. Las
 | E2E Docker | `citas-api/docs/evidence/s3-s4/03-e2e-docker.md`: API sobre MySQL real 47/47 + recorrido UI USER/ADMIN/PROFESSIONAL |
 | Decisiones | Regímenes fijos (PRD RF-05), V7; ver wiki `decisiones.md` DEC-009..012 |
 | Pendiente | Prueba de concurrencia real (dos transacciones simultáneas) sobre MySQL; hoy la doble reserva está cubierta de forma secuencial y por `SELECT … FOR UPDATE` |
+
+## Registro S5 — Agente conectado (en curso)
+
+| Campo | Evidencia |
+|---|---|
+| Repo / rama | `citas-api`, `develop` |
+| Commit | api `a7da6dc` feat(s5)… (backend, JSON y evidencias; sin push) |
+| Contrato | `GET /api/v1/automation/reminders/due`, `POST /api/v1/automation/reminders/{id}/deliveries`, `X-Automation-Key` (wiki DEC-013..017) |
+| Pruebas | Red 10/10 → Green; suite 54/54; smoke MySQL 8.4 V8 (`citas-api/docs/evidence/s5/01-red-green.md`) |
+| Hook | Export n8n FAIL/PASS (`citas-api/docs/evidence/s5/02-hook-n8n-json.md`) |
+| WF-001 | `citas-api/automations/n8n/WF-001-appointment-reminders.json` (`active: false`) |
+| Seguridad | `citas-api/docs/evidence/s5/05-untrusted-content.md`, `citas-api/docs/security/S5-riesgos-residuales.md` |
+| Entorno | BD de la app `citas_app` separada de la referencia `citas_fcv_training` (enmienda DEC-005) |
+| Pendiente | Ejecución en n8n con Gmail OAuth propio, túnel ngrok, invocación MCP y demo en vivo |

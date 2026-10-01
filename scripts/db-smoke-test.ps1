@@ -7,7 +7,8 @@ $envMap = @{}
 Get-Content .env | Where-Object { $_ -match '^[A-Za-z_][A-Za-z0-9_]*=' } | ForEach-Object {
   $k,$v = $_.Split('=',2); $envMap[$k] = $v
 }
-$db = $envMap['MYSQL_DATABASE']
+# Esquema de referencia creado por database/reference/db.sql (distinto de la BD de la app)
+$db = 'citas_fcv_training'
 $rootPassword = $envMap['MYSQL_ROOT_PASSWORD']
 
 Write-Host "Esperando MySQL..." -ForegroundColor Cyan
