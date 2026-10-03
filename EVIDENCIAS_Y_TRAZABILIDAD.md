@@ -81,3 +81,29 @@ Los JSON exportados deben abrir/importar sin depender de secretos embebidos. Las
 | Seguridad | `citas-api/docs/evidence/s5/05-untrusted-content.md`, `citas-api/docs/security/S5-riesgos-residuales.md` |
 | Entorno | BD de la app `citas_app` separada de la referencia `citas_fcv_training` (enmienda DEC-005) |
 | Pendiente | Ejecución en n8n con Gmail OAuth propio, túnel ngrok, invocación MCP y demo en vivo |
+
+## Registro S6 — WF-002 y WF-003 (en curso)
+
+| Campo | Evidencia |
+|---|---|
+| Repo / rama | `citas-api`, `develop` |
+| Commit | api `73f270d` feat(s6)… (sin push) |
+| Backend | Outbox V9 + despachador con reintentos (WF-002); `GET /api/v1/automation/appointments/daily` sin PII (WF-003) |
+| Pruebas | Red 8/8 → suite 72/72; smoke MySQL 8.4 V9 (`citas-api/docs/evidence/s6/01-wf002-wf003.md`) |
+| n8n por MCP | `Hernando-WF-002-status-notifications` (`lLZQOsvQpmVLXYah`) y `Hernando-WF-003-daily-operational-summary` (`Z8YOsBjSqA39K1pu`), inactivos y sin credenciales; ejecuciones de prueba 59, 60 y 61 |
+| JSON | `citas-api/automations/n8n/WF-002-status-notifications.json`, `WF-003-daily-operational-summary.json` (hook OK) |
+| Seguridad | Credencial ajena autoasignada detectada y retirada (DEC-020, R13) |
+| Pendiente | Credenciales propias (Gmail OAuth, Header Auth), ejecución real y activación; merge `develop → main` |
+
+## Registro S5/S6 — Ejecución real (2026-10-03)
+
+| Campo | Evidencia |
+|---|---|
+| Commits | api `77a8140` (reintento 404/401/403, en `origin/develop`) y `9b650f5` (evidencia real, local) |
+| Infraestructura | API Docker + ngrok en Docker (`--profile tunnel`) con política de rutas; credenciales propias en n8n |
+| WF-001 | Ejecuciones 76-79: FAILED→SENT, sin duplicado, rama de API caída |
+| WF-002 | Activo; 4 eventos DELIVERED (HTTP 200) y 4 correos recibidos |
+| WF-003 | Ejecución 85; resumen del día recibido |
+| Evidencia | `citas-api/docs/evidence/s6/02-ejecucion-real.md` con capturas sin datos personales |
+
+**Cierre 2026-10-03:** `citas-api` `develop` publicado y fusionado en `main` (merge `3fa6423`, `--no-ff`); `citas-web` sin cambios en S5/S6 (`main` ya contiene `develop`). WF-001, WF-002 y WF-003 activos en la instancia por decisión del estudiante.
